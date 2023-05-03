@@ -1,0 +1,2 @@
+0,product1,description1,AUTRE,100.0,country1,10.0,30,supplier1
+1,product2,description2,AUTRE,200.0,country2,5.0,70,supplier2
