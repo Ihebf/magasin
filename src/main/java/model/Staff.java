@@ -10,12 +10,12 @@ public class Staff {
     private String personalAddress;
     private String jobAddress;
     private String role;
-    private int supervisorId;
+    private Integer supervisorId;
     private int badgeNum;
     private static int count = 0;
 
-    public Staff(String firstName, String lastName, String personalAddress, String jobAddress, String role, int supervisor) {
-        this.id = count++;
+    public Staff(String firstName, String lastName, String personalAddress, String jobAddress, String role, Integer supervisor) {
+        this.id = ++count;
         this.firstName = firstName;
         this.lastName = lastName;
         this.personalAddress = personalAddress;
@@ -27,6 +27,9 @@ public class Staff {
     }
 
     public Staff() {
+        this.id = ++count;
+        Random random = new Random();
+        this.badgeNum = random.nextInt(100000000)+100000000;
     }
 
     @Override
@@ -89,11 +92,11 @@ public class Staff {
         this.role = role;
     }
 
-    public int getSupervisorId() {
+    public Integer getSupervisorId() {
         return supervisorId;
     }
 
-    public void setSupervisorId(int supervisorId) {
+    public void setSupervisorId(Integer supervisorId) {
         this.supervisorId = supervisorId;
     }
 

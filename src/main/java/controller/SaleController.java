@@ -62,6 +62,21 @@ public class SaleController {
         System.out.println("get all sales: "+saleController.getAllSales());
 
     }
+
+    private double calculateTotalPrice(Map<Integer, Integer> products) {
+        ProductController productController = new ProductController();
+        double totalPrice = 0.0;
+        if(products == null || products.isEmpty())
+            return totalPrice;
+        for (Map.Entry<Integer, Integer> entry : products.entrySet()) {
+            Integer productId = entry.getKey();
+            Integer quantity = entry.getValue();
+            Product p = productController.getProductById(productId);
+            totalPrice+=quantity*p.getPrice();
+        }
+        return totalPrice;
+    }
+
     public boolean addSale(Sale sale) {
         try {
             Map<Integer, Integer> products = sale.getProducts();
@@ -75,6 +90,7 @@ public class SaleController {
                 p.setQuantity(p.getQuantity()-quantity);
                 productController.editProduct(p);
             }
+            sale.setTotalPrice(calculateTotalPrice(products));
             Files.writeString(saleDB, sale.toString()+"\n", StandardOpenOption.APPEND);
         } catch (IOException e) {
             e.printStackTrace();
@@ -148,12 +164,22 @@ public class SaleController {
 
     private static Sale convertLineToSale(String line){
         Sale sale = new Sale();
+
+        Map<Integer,Integer> map = new HashMap<>();
+        String products = line.substring(line.indexOf('{')+1,line.indexOf('}'));
+        String[] productList = products.split(",");
+        for (String p: productList) {
+            String[] var1 = p.split("=");
+            map.put(Integer.parseInt(var1[0].trim()),Integer.parseInt(var1[1].trim()));
+        }
+
+        line = line.replace(products,"");
         String[] att = line.split(",");
         sale.setId(Integer.parseInt(att[0]));
         sale.setStoreName(att[1]);
         sale.setStaffId(Integer.parseInt(att[2]));
         sale.setClientId(Integer.parseInt(att[3]));
-        //sale.setProducts(att[4]);
+        sale.setProducts(map);
         sale.setTotalPrice(Double.parseDouble(att[5]));
         return sale;
     }

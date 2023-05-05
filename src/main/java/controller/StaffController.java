@@ -145,7 +145,12 @@ public class StaffController {
         staff.setPersonalAddress(att[3]);
         staff.setJobAddress(att[4]);
         staff.setRole(att[5]);
-        staff.setSupervisorId(Integer.parseInt(att[6]));
+        try {
+            staff.setSupervisorId(Integer.parseInt(att[6]));
+        }catch (Exception e){
+            staff.setSupervisorId(null);
+        }
+
         staff.setBadgeNum(Integer.parseInt(att[7]));
         return staff;
     }

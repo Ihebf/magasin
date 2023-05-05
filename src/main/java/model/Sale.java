@@ -19,21 +19,6 @@ public class Sale {
         this.staffId = staff;
         this.clientId = client;
         this.products = product;
-        this.totalPrice = calculateTotalPrice();
-    }
-
-    private double calculateTotalPrice() {
-        ProductController productController = new ProductController();
-        double totalPrice = 0.0;
-        if(products == null || products.isEmpty())
-            return totalPrice;
-        for (Map.Entry<Integer, Integer> entry : products.entrySet()) {
-            Integer productId = entry.getKey();
-            Integer quantity = entry.getValue();
-            Product p = productController.getProductById(productId);
-            totalPrice+=quantity*p.getPrice();
-        }
-        return totalPrice;
     }
 
     public Sale() {
