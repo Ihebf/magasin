@@ -129,16 +129,7 @@ public class StaffView extends JFrame {
             return;
         for (Staff staff : staffs) {
             Object[] rowData;
-            if (staff.getSupervisorId() == null) {
-                rowData = new Object[]{staff.getId(),
-                        staff.getFirstName(),
-                        staff.getLastName(),
-                        staff.getPersonalAddress(),
-                        staff.getJobAddress(),
-                        staff.getRole(),
-                        "NaN",
-                        staff.getBadgeNum()};
-            } else {
+            if (staff.getSupervisorId() != null && staffController.getStaffById(staff.getSupervisorId())!=null) {
                 String supervisorName = staffController.getStaffById(staff.getSupervisorId()).getFirstName();
                 rowData = new Object[]{staff.getId(),
                         staff.getFirstName(),
@@ -147,6 +138,15 @@ public class StaffView extends JFrame {
                         staff.getJobAddress(),
                         staff.getRole(),
                         supervisorName,
+                        staff.getBadgeNum()};
+            } else {
+                rowData = new Object[]{staff.getId(),
+                        staff.getFirstName(),
+                        staff.getLastName(),
+                        staff.getPersonalAddress(),
+                        staff.getJobAddress(),
+                        staff.getRole(),
+                        "NaN",
                         staff.getBadgeNum()};
             }
             model.addRow(rowData);
