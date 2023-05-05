@@ -8,7 +8,7 @@ public class MainClass {
 
     public static void main(String[] args) {
         for(int i=0;i<50;i++){
-            Staff staff = new Staff("first name "+i,"last name "+i,"personal address "+i,"job address "+i,"role "+i,i+1);
+            Staff staff = new Staff("first name "+i,"last name "+i,"personal address "+i,"job address "+i,"role ",++i);
             staffController.addStaff(staff);
         }
 
