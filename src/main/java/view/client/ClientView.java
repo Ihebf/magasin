@@ -1,7 +1,9 @@
-package view;
+package view.client;
 
-import controller.StaffController;
-import model.Staff;
+import controller.ClientController;
+import model.Client;
+import view.Index;
+
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -10,17 +12,16 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.List;
 
-public class StaffView extends JFrame {
+public class ClientView extends JFrame {
 
-    private final StaffController staffController = new StaffController();
+    private final ClientController clientController = new ClientController();
     private DefaultTableModel model = null;
-
     public static void main(String[] args) {
-        new StaffView();
+        new ClientView();
     }
 
-    public StaffView() {
-        super("Staff Interface");
+    public ClientView(){
+        super("Client Interface");
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setSize(1200, 600);
         setLocationRelativeTo(null);
@@ -37,18 +38,17 @@ public class StaffView extends JFrame {
 
 
 
-        JLabel label = new JLabel("Staff");
+        JLabel label = new JLabel("Client");
         label.setHorizontalAlignment(SwingConstants.CENTER);
 
-        String[] columnNames = {"#", "First Name", "Last Name", "Personal Address",
-                "Job Address", "Role", "Supervisor Name", "Badge Number"};
+        String[] columnNames = {"#", "Name", "Carte number", "Email", "Code postal"};
         model = new DefaultTableModel(columnNames, 0);
         JTable table = new JTable(model);
 
         /* button actions */
         deleteButton.addActionListener(actionEvent -> deleteRow(table,model));
-        addButton.addActionListener(actionEvent -> addStaff());
-        editButton.addActionListener(actionEvent -> editStaff(table,model) );
+        addButton.addActionListener(actionEvent -> addClient());
+        editButton.addActionListener(actionEvent -> editClient(table,model) );
         /* **** */
 
 
@@ -69,7 +69,7 @@ public class StaffView extends JFrame {
         setVisible(true);
     }
 
-    private void editStaff(JTable table, DefaultTableModel model) {
+    private void editClient(JTable table, DefaultTableModel model) {
         // get the selected row index
         int selectedRowIndex = table.getSelectedRow();
 
@@ -79,8 +79,8 @@ public class StaffView extends JFrame {
             for (int i = 0; i < model.getColumnCount(); i++) {
                 selectedRowValues[i] = model.getValueAt(selectedRowIndex, i);
             }
-            AddStaffView addStaffView = new AddStaffView(selectedRowValues);
-            addStaffView.addWindowListener(new WindowAdapter() {
+            AddClientView addClientView = new AddClientView(selectedRowValues);
+            addClientView.addWindowListener(new WindowAdapter() {
                 @Override
                 public void windowClosed(WindowEvent e) {
                     super.windowClosed(e);
@@ -91,9 +91,9 @@ public class StaffView extends JFrame {
         }
     }
 
-    private void addStaff() {
-        AddStaffView addStaffView = new AddStaffView(null);
-        addStaffView.addWindowListener(new WindowAdapter() {
+    private void addClient() {
+        AddClientView addClientView = new AddClientView(null);
+        addClientView.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosed(WindowEvent e) {
                 super.windowClosed(e);
@@ -115,7 +115,7 @@ public class StaffView extends JFrame {
             }
 
             // delete from db file
-            staffController.deleteStaff((Integer) selectedRowValues[0]);
+            clientController.deleteClient((Integer) selectedRowValues[0]);
 
             // remove the selected row from the table
             model.removeRow(selectedRowIndex);
@@ -124,31 +124,18 @@ public class StaffView extends JFrame {
     }
 
     public void fillTable(DefaultTableModel model) {
-        List<Staff> staffs = staffController.getAllStaffs();
-        if(staffs == null || staffs.isEmpty())
+        List<Client> clients = clientController.getAllClients();
+
+        if(clients == null || clients.isEmpty())
             return;
-        for (Staff staff : staffs) {
+        for (Client client : clients) {
             Object[] rowData;
-            if (staff.getSupervisorId() != null && staffController.getStaffById(staff.getSupervisorId())!=null) {
-                String supervisorName = staffController.getStaffById(staff.getSupervisorId()).getFirstName();
-                rowData = new Object[]{staff.getId(),
-                        staff.getFirstName(),
-                        staff.getLastName(),
-                        staff.getPersonalAddress(),
-                        staff.getJobAddress(),
-                        staff.getRole(),
-                        supervisorName,
-                        staff.getBadgeNum()};
-            } else {
-                rowData = new Object[]{staff.getId(),
-                        staff.getFirstName(),
-                        staff.getLastName(),
-                        staff.getPersonalAddress(),
-                        staff.getJobAddress(),
-                        staff.getRole(),
-                        "NaN",
-                        staff.getBadgeNum()};
-            }
+            rowData = new Object[]{client.getId(),
+                    client.getName(),
+                    client.getCarteNum()+"",
+                    client.getEmail(),
+                    client.getCodePostal()
+            };
             model.addRow(rowData);
         }
     }

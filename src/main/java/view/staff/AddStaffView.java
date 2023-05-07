@@ -1,23 +1,22 @@
-package view;
+package view.staff;
 
 import controller.StaffController;
 import model.Staff;
 
 import javax.swing.*;
 import java.awt.*;
-import java.lang.reflect.Array;
 import java.util.Arrays;
 
 public class AddStaffView extends JFrame {
 
-    private JTextField firstNameTf = new JTextField();
-    private JTextField lastNameTf = new JTextField();
-    private JTextField personalAddressTf = new JTextField();
-    private JTextField jobAddressTf = new JTextField();
-    private JTextField roleTf = new JTextField();
-    private JTextField supervisorNameTf = new JTextField();
-    private JTextField badgeNumTf = new JTextField();
-    private StaffController staffController = new StaffController();
+    private final JTextField firstNameTf = new JTextField();
+    private final JTextField lastNameTf = new JTextField();
+    private final JTextField personalAddressTf = new JTextField();
+    private final JTextField jobAddressTf = new JTextField();
+    private final JTextField roleTf = new JTextField();
+    private final JTextField supervisorNameTf = new JTextField();
+    private final JTextField badgeNumTf = new JTextField();
+    private final StaffController staffController = new StaffController();
 
     public static void main(String[] args) {
         new AddStaffView(null);

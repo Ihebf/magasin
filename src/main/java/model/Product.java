@@ -14,6 +14,7 @@ public class Product {
     private static int count = 0;
 
     public Product() {
+        this.id = count++;
     }
 
     public Product(String name, String description, String type, double price, String country, double TVA, int quantity, String supplierName) {

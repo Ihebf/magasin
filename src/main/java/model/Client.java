@@ -31,6 +31,9 @@ public class Client {
     }
 
     public Client() {
+        this.id = count++;
+        Random random = new Random();
+        this.carteNum = random.nextInt(100000000)+100000000;
     }
 
     public Integer getId() {

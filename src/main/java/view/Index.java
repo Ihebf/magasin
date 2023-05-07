@@ -1,5 +1,9 @@
 package view;
 
+import view.client.ClientView;
+import view.staff.StaffView;
+import view.stock.StockView;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -35,10 +39,20 @@ public class Index extends JFrame {
         JButton button3 = new JButton("Customer management");
         JButton button4 = new JButton("sale");
 
+        button1.addActionListener(actionEvent -> {
+            new StockView();
+            dispose();
+        });
         button2.addActionListener(actionEvent -> {
             new StaffView();
             dispose();
         });
+        button3.addActionListener(actionEvent -> {
+            new ClientView();
+            dispose();
+        });
+
+
         // Create a panel for the buttons
         JPanel buttonPanel = new JPanel();
 
