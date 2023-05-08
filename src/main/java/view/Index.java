@@ -1,6 +1,7 @@
 package view;
 
 import view.client.ClientView;
+import view.sale.SaleView;
 import view.staff.StaffView;
 import view.stock.StockView;
 
@@ -49,6 +50,10 @@ public class Index extends JFrame {
         });
         button3.addActionListener(actionEvent -> {
             new ClientView();
+            dispose();
+        });
+        button4.addActionListener(actionEvent -> {
+            new SaleView(null);
             dispose();
         });
 

@@ -130,6 +130,19 @@ public class ProductController {
         return null;
     }
 
+    public List<Product> matchProductByName(String name) {
+        try {
+            return Files.readAllLines(productDB)
+                    .parallelStream()
+                    .filter(l -> l.split(",")[1].contains(name))
+                    .map(ProductController::convertLineToProduct)
+                    .collect(Collectors.toList());
+        } catch (IOException e) {
+            System.err.println("DB file doesn't exist");
+        }
+        return null;
+    }
+
     public List<Product> getAllProducts() {
         try {
             return Files.readAllLines(productDB)

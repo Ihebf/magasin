@@ -1,7 +1,5 @@
 package model;
 
-import controller.ProductController;
-
 import java.util.Map;
 
 public class Sale {
@@ -22,6 +20,7 @@ public class Sale {
     }
 
     public Sale() {
+        this.id = count++;
     }
 
     @Override
